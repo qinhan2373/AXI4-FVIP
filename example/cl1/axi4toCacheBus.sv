@@ -58,8 +58,10 @@ module Axi4ToCacheBus (
   input  logic        io_out_rsp_bits_err,
   output logic [2:0]  proof_state,
   output logic        proof_aw_pending,
+  output logic [31:0] proof_aw_addr,
   output logic [7:0]  proof_aw_len,
   output logic [7:0]  proof_write_index,
+  output logic [31:0] proof_req_addr,
   output logic        proof_w_buf_valid,
   output logic        proof_w_buf_last,
   output logic        proof_ar_pending,
@@ -286,8 +288,10 @@ module Axi4ToCacheBus (
 
   assign proof_state = state;
   assign proof_aw_pending = aw_pending;
+  assign proof_aw_addr = aw_addr;
   assign proof_aw_len = aw_len;
   assign proof_write_index = write_index;
+  assign proof_req_addr = io_out_req_bits_addr;
   assign proof_w_buf_valid = w_buf_valid;
   assign proof_w_buf_last = w_buf_last;
   assign proof_ar_pending = ar_pending;

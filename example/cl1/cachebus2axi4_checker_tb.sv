@@ -185,8 +185,10 @@ module cachebus2axi4_checker_tb (
    wire slave_read_busy = slave_seen_ar || dn_r_valid;
    wire [2:0] axi2cb_state;
    wire       axi2cb_aw_pending;
+   wire [31:0] axi2cb_aw_addr;
    wire [7:0] axi2cb_aw_len;
    wire [7:0] axi2cb_write_index;
+   wire [31:0] axi2cb_req_addr;
    wire       axi2cb_w_buf_valid;
    wire       axi2cb_w_buf_last;
    wire       axi2cb_ar_pending;
@@ -275,8 +277,10 @@ module cachebus2axi4_checker_tb (
       .io_out_rsp_bits_err   (cb_rsp_bits_err),
       .proof_state           (axi2cb_state),
       .proof_aw_pending      (axi2cb_aw_pending),
+      .proof_aw_addr         (axi2cb_aw_addr),
       .proof_aw_len          (axi2cb_aw_len),
       .proof_write_index     (axi2cb_write_index),
+      .proof_req_addr        (axi2cb_req_addr),
       .proof_w_buf_valid     (axi2cb_w_buf_valid),
       .proof_w_buf_last      (axi2cb_w_buf_last),
       .proof_ar_pending      (axi2cb_ar_pending),
@@ -779,15 +783,21 @@ module cachebus2axi4_checker_tb (
       .source_read_rsp_beat(read_rsp_beat),
       .source_write_burst_len(write_burst_len),
       .source_read_burst_len(read_burst_len),
+      .up_aw_addr(up_aw_addr),
+      .source_up_aw_size(3'b010),
       .bridge_state(axi2cb_state),
       .bridge_aw_pending(axi2cb_aw_pending),
+      .bridge_aw_addr(axi2cb_aw_addr),
       .bridge_aw_len(axi2cb_aw_len),
       .bridge_write_index(axi2cb_write_index),
+      .bridge_req_addr(axi2cb_req_addr),
       .bridge_w_buf_valid(axi2cb_w_buf_valid),
       .bridge_w_buf_last(axi2cb_w_buf_last),
       .bridge_ar_pending(axi2cb_ar_pending),
       .bridge_ar_len(axi2cb_ar_len),
       .bridge_rsp_last(axi2cb_rsp_last),
+      .bridge_in_rsp_valid(cb_rsp_valid),
+      .bridge_in_rsp_last(cb_rsp_bits_last),
       .m_read_dep_ar_seen(m_read_dep_ar_seen),
       .m_read_dep_arlen(m_read_dep_arlen),
       .m_read_dep_r_count(m_read_dep_r_count)

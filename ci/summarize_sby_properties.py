@@ -13,11 +13,17 @@ def find_xml(path):
     if os.path.isfile(path):
         return path
 
-    direct = sorted(glob.glob(os.path.join(path, "*.xml")))
+    direct = sorted(
+        glob.glob(os.path.join(path, "*.xml")) +
+        glob.glob(os.path.join(path, ".*.xml"))
+    )
     if direct:
         return direct[0]
 
-    recursive = sorted(glob.glob(os.path.join(path, "**", "*.xml"), recursive=True))
+    recursive = sorted(
+        glob.glob(os.path.join(path, "**", "*.xml"), recursive=True) +
+        glob.glob(os.path.join(path, "**", ".*.xml"), recursive=True)
+    )
     if recursive:
         return recursive[0]
 
