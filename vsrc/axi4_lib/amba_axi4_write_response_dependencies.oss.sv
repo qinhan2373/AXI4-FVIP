@@ -806,10 +806,10 @@ module amba_axi4_write_response_dependencies #(
          end
 
          always_comb begin
-            automatic logic aw_slot_found;
-            automatic logic w_slot_found;
-            automatic logic [WR_CNTW:0] aw_slot_index;
-            automatic logic [WR_CNTW:0] w_slot_index;
+            logic aw_slot_found;
+            logic w_slot_found;
+            logic [WR_CNTW:0] aw_slot_index;
+            logic [WR_CNTW:0] w_slot_index;
 
             write_cam_count_d = write_cam_count_q;
             write_id_d = write_id_q;
