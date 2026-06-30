@@ -1,0 +1,78 @@
+# Shared Yosys/SBY filter for the CL1 AXI4 profile.
+#
+# Include this after `prep -top ...` in an SBY/Yosys script:
+#
+#   prep -top <top>
+#   script cl1_profile_filter.ys
+#
+# and add `../../formal/cl1_profile_filter.ys` to the SBY [files] list.
+#
+# The filter removes formal targets for CL1-out-of-scope AXI4 features:
+# multi-ID behavior, FIXED/WRAP/exclusive/EXOKAY/LP behavior, and optional
+# USER/CACHE/PROT/QOS/REGION sidebands.  It intentionally leaves core CL1
+# handshakes, reset, stability, WSTRB, response ordering, RLAST/WLAST count,
+# burst size, and 4KB boundary checks active.
+
+# Unsupported burst/access modes.
+chformal -assert -assume -cover -remove */c:*EXCLUSIVE*
+chformal -assert -assume -cover -remove */c:*exclusive*
+chformal -assert -assume -cover -remove */c:*EXOKAY*
+chformal -assert -assume -cover -remove */c:*exokay*
+chformal -assert -assume -cover -remove */c:*ATOMIC*
+chformal -assert -assume -cover -remove */c:*atomic*
+chformal -assert -assume -cover -remove */c:*FIXED*
+chformal -assert -assume -cover -remove */c:*fixed*
+chformal -assert -assume -cover -remove */c:*WRAP*
+chformal -assert -assume -cover -remove */c:*wrap*
+chformal -assert -assume -cover -remove */c:*WRAPPING*
+chformal -assert -assume -cover -remove */c:*wrapping*
+chformal -assert -assume -cover -remove */c:*UNALIGNED*
+chformal -assert -assume -cover -remove */c:*unaligned*
+chformal -assert -assume -cover -remove */c:*ADDRESS_ALIG*
+chformal -assert -assume -cover -remove */c:*VALID_LEN_FIXED*
+chformal -assert -assume -cover -remove */c:*VALID_WRAP_BURST*
+chformal -assert -assume -cover -remove */c:*BURST_LEN_EXCLUSIVE*
+chformal -assert -assume -cover -remove */c:*EXCLUSIVE_BYTES_TRANSFER*
+
+# CL1 ties ID, lock, and optional sideband fields rather than verifying dynamic
+# behavior on those signal families.  READY_MAXWAIT is an AMBA recommended
+# bounded-wait/fairness rule; CL1 signoff checks protocol correctness without
+# imposing a fixed environment service latency.
+chformal -assert -assume -cover -remove */c:*AWID*
+chformal -assert -assume -cover -remove */c:*ARID*
+chformal -assert -assume -cover -remove */c:*BID*
+chformal -assert -assume -cover -remove */c:*STABLE_RID*
+chformal -assert -assume -cover -remove */c:*RID_X*
+chformal -assert -assume -cover -remove */c:*RID_TIEOFF*
+chformal -assert -assume -cover -remove */c:*AWLOCK*
+chformal -assert -assume -cover -remove */c:*ARLOCK*
+chformal -assert -assume -cover -remove */c:*READY_MAXWAIT*
+chformal -assert -assume -cover -remove */c:*max_wait*
+
+chformal -assert -assume -cover -remove */c:*AWCACHE*
+chformal -assert -assume -cover -remove */c:*ARCACHE*
+chformal -assert -assume -cover -remove */c:*AWPROT*
+chformal -assert -assume -cover -remove */c:*ARPROT*
+chformal -assert -assume -cover -remove */c:*AWQOS*
+chformal -assert -assume -cover -remove */c:*ARQOS*
+chformal -assert -assume -cover -remove */c:*AWREGION*
+chformal -assert -assume -cover -remove */c:*ARREGION*
+chformal -assert -assume -cover -remove */c:*AWUSER*
+chformal -assert -assume -cover -remove */c:*ARUSER*
+chformal -assert -assume -cover -remove */c:*WUSER*
+chformal -assert -assume -cover -remove */c:*BUSER*
+chformal -assert -assume -cover -remove */c:*RUSER*
+chformal -assert -assume -cover -remove */c:*MEMORY_TYPE*
+chformal -assert -assume -cover -remove */c:*NON_CACHEABLE*
+
+# Generic full-AXI4 cover/state-space witnesses that are not CL1 signoff goals.
+chformal -assert -assume -cover -remove */c:*forward_progress*
+chformal -assert -assume -cover -remove */c:*FORWARD_PROGRESS*
+chformal -cover -remove */c:*TWO_TRANSACTIONS_DIFFERENT*
+chformal -cover -remove */c:*TAG_NUMBER*
+chformal -cover -remove */c:*AW_B2B*
+chformal -cover -remove */c:*MAX_BURST_SIZE*
+chformal -cover -remove */c:*len15*
+chformal -cover -remove */c:*id_nonzero*
+chformal -cover -remove */c:*cache_nonzero*
+chformal -cover -remove */c:*prot_nonzero*

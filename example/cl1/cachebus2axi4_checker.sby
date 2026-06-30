@@ -1,0 +1,61 @@
+[tasks]
+prove
+bmc
+cover
+
+[options]
+prove: mode prove
+bmc: mode bmc
+bmc: depth 20
+cover: mode cover
+cover: depth 20
+
+[engines]
+prove: smtbmc boolector
+bmc: smtbmc boolector
+cover: smtbmc boolector
+
+[script]
+read -formal -sv amba_axi4_protocol_checker_pkg.sv
+read -formal -sv oss_amba_axi4_definition_of_axi4_lite.sv
+read -formal -sv oss_amba_axi4_single_interface_requirements.sv
+read -formal -sv oss_amba_axi4_transaction_structure.sv
+read -formal -sv oss_amba_axi4_transaction_attributes.sv
+read -formal -sv oss_amba_axi4_atomic_accesses.sv
+read -formal -sv amba_axi4_write_address_channel.oss.sv
+read -formal -sv amba_axi4_write_data_channel.oss.sv
+read -formal -sv amba_axi4_write_response_channel.oss.sv
+read -formal -sv amba_axi4_read_address_channel.oss.sv
+read -formal -sv amba_axi4_read_data_channel.oss.sv
+read -formal -sv amba_axi4_write_response_dependencies.oss.sv
+read -formal -sv amba_axi4_write_response_dependencies_cl1_oss.sv
+read -formal -sv amba_axi4_read_response_dependencies.oss.sv
+read -formal -sv -DOSS_CL1_LIGHTWEIGHT_WRITE_DEPENDENCIES amba_axi4_protocol_checker_oss.sv
+read -formal -sv cl1_oss_unreachable_invariants.sv
+read -formal -sv axi4toCacheBus.sv
+read -formal -sv CacheBus2Axi4Top.sv
+read -formal -sv cachebus2axi4_checker_tb.sv
+prep -top cachebus2axi4_checker_tb
+script cl1_profile_filter.ys
+
+[files]
+axi4toCacheBus.sv
+CacheBus2Axi4Top.sv
+cachebus2axi4_checker_tb.sv
+../../formal/cl1_profile_filter.ys
+../../vsrc/amba_axi4_protocol_checker_pkg.sv
+../../vsrc/axi4_spec/oss_amba_axi4_definition_of_axi4_lite.sv
+../../vsrc/axi4_spec/oss_amba_axi4_single_interface_requirements.sv
+../../vsrc/axi4_spec/oss_amba_axi4_transaction_structure.sv
+../../vsrc/axi4_spec/oss_amba_axi4_transaction_attributes.sv
+../../vsrc/axi4_spec/oss_amba_axi4_atomic_accesses.sv
+../../vsrc/amba_axi4_write_address_channel.oss.sv
+../../vsrc/amba_axi4_write_data_channel.oss.sv
+../../vsrc/amba_axi4_write_response_channel.oss.sv
+../../vsrc/amba_axi4_read_address_channel.oss.sv
+../../vsrc/amba_axi4_read_data_channel.oss.sv
+../../vsrc/axi4_lib/amba_axi4_write_response_dependencies.oss.sv
+../../vsrc/axi4_lib/amba_axi4_write_response_dependencies_cl1_oss.sv
+../../vsrc/axi4_lib/amba_axi4_read_response_dependencies.oss.sv
+../../vsrc/amba_axi4_protocol_checker_oss.sv
+../../formal/cl1_oss_unreachable_invariants.sv

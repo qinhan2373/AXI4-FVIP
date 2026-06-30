@@ -1,0 +1,64 @@
+[tasks]
+prove
+cover
+
+[options]
+prove: mode bmc
+prove: depth 64
+cover: mode cover
+cover: depth 64
+
+[engines]
+prove: smtbmc --keep-going boolector
+cover: smtbmc boolector
+
+[script]
+read -formal -sv amba_axi4_protocol_checker_pkg.sv
+read -formal -sv oss_amba_axi4_definition_of_axi4_lite.sv
+read -formal -sv oss_amba_axi4_single_interface_requirements.sv
+read -formal -sv oss_amba_axi4_transaction_structure.sv
+read -formal -sv oss_amba_axi4_transaction_attributes.sv
+read -formal -sv oss_amba_axi4_atomic_accesses.sv
+read -formal -sv amba_axi4_write_address_channel.oss.sv
+read -formal -sv amba_axi4_write_data_channel.oss.sv
+read -formal -sv amba_axi4_write_response_channel.oss.sv
+read -formal -sv amba_axi4_read_address_channel.oss.sv
+read -formal -sv amba_axi4_read_data_channel.oss.sv
+read -formal -sv amba_axi4_write_response_dependencies.oss.sv
+read -formal -sv amba_axi4_read_response_dependencies.oss.sv
+read -formal -sv amba_axi4_protocol_checker_oss.sv
+read -formal -sv arbiter.v
+read -formal -sv priority_encoder.v
+read -formal -sv axi_register_rd.v
+read -formal -sv axi_register_wr.v
+read -formal -sv axi_crossbar_addr.v
+read -formal -sv axi_crossbar_rd.v
+read -formal -sv axi_crossbar_wr.v
+read -formal -sv axi_crossbar.v
+read -formal -sv axi_crossbar_checker_tb.sv
+prep -top axi_crossbar_checker_tb
+
+[files]
+../../../AXI4/examples/axi_crossbar/arbiter.v
+../../../AXI4/examples/axi_crossbar/priority_encoder.v
+../../../AXI4/examples/axi_crossbar/axi_register_rd.v
+../../../AXI4/examples/axi_crossbar/axi_register_wr.v
+../../../AXI4/examples/axi_crossbar/axi_crossbar_addr.v
+../../../AXI4/examples/axi_crossbar/axi_crossbar_rd.v
+../../../AXI4/examples/axi_crossbar/axi_crossbar_wr.v
+../../../AXI4/examples/axi_crossbar/axi_crossbar.v
+axi_crossbar_checker_tb.sv
+../../vsrc/amba_axi4_protocol_checker_pkg.sv
+../../vsrc/axi4_spec/oss_amba_axi4_definition_of_axi4_lite.sv
+../../vsrc/axi4_spec/oss_amba_axi4_single_interface_requirements.sv
+../../vsrc/axi4_spec/oss_amba_axi4_transaction_structure.sv
+../../vsrc/axi4_spec/oss_amba_axi4_transaction_attributes.sv
+../../vsrc/axi4_spec/oss_amba_axi4_atomic_accesses.sv
+../../vsrc/amba_axi4_write_address_channel.oss.sv
+../../vsrc/amba_axi4_write_data_channel.oss.sv
+../../vsrc/amba_axi4_write_response_channel.oss.sv
+../../vsrc/amba_axi4_read_address_channel.oss.sv
+../../vsrc/amba_axi4_read_data_channel.oss.sv
+../../vsrc/axi4_lib/amba_axi4_write_response_dependencies.oss.sv
+../../vsrc/axi4_lib/amba_axi4_read_response_dependencies.oss.sv
+../../vsrc/amba_axi4_protocol_checker_oss.sv

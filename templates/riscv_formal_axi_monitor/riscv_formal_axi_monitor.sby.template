@@ -1,0 +1,77 @@
+# Template for adding the OSS AXI protocol monitor to an existing
+# riscv-formal/SBY run.
+#
+# Replace every <...> marker before running this file.  Keep the FVIP files in
+# the [files] list so SBY copies them into the work directory; the [script]
+# section reads the copied basenames.
+
+[tasks]
+bmc
+prove
+cover
+
+[options]
+bmc: mode bmc
+bmc: depth 64
+prove: mode prove
+prove: depth 64
+cover: mode cover
+cover: depth 64
+
+[engines]
+bmc: smtbmc boolector
+prove: smtbmc boolector
+cover: smtbmc boolector
+
+[script]
+read -formal -sv amba_axi4_protocol_checker_pkg.sv
+read -formal -sv oss_amba_axi4_definition_of_axi4_lite.sv
+read -formal -sv oss_amba_axi4_single_interface_requirements.sv
+read -formal -sv oss_amba_axi4_transaction_structure.sv
+read -formal -sv oss_amba_axi4_transaction_attributes.sv
+read -formal -sv oss_amba_axi4_atomic_accesses.sv
+read -formal -sv amba_axi4_write_address_channel.oss.sv
+read -formal -sv amba_axi4_write_data_channel.oss.sv
+read -formal -sv amba_axi4_write_response_channel.oss.sv
+read -formal -sv amba_axi4_read_address_channel.oss.sv
+read -formal -sv amba_axi4_read_data_channel.oss.sv
+read -formal -sv amba_axi4_write_response_dependencies.oss.sv
+read -formal -sv amba_axi4_write_response_dependencies_cl1_oss.sv
+read -formal -sv amba_axi4_read_response_dependencies.oss.sv
+read -formal -sv -DOSS_CL1_LIGHTWEIGHT_WRITE_DEPENDENCIES amba_axi4_protocol_checker_oss.sv
+read -formal -sv amba_axi4_monitor_wrapper_oss.sv
+read -formal -sv riscv_formal_axi_monitor_template.sv
+
+# Add the existing riscv-formal harness, DUT, and any DUT-specific bus adapter.
+# Example:
+# read -formal -sv <YOUR_RISCV_FORMAL_TOP>.sv
+# read -formal -sv <YOUR_DUT>.sv
+# read -formal -sv <OPTIONAL_CUSTOM_BUS_TO_AXI_ADAPTER>.sv
+
+prep -top <YOUR_RISCV_FORMAL_TOP>
+script cl1_profile_filter.ys
+
+[files]
+<AXI4_OSS_DIR>/formal/cl1_profile_filter.ys
+<AXI4_OSS_DIR>/vsrc/amba_axi4_protocol_checker_pkg.sv
+<AXI4_OSS_DIR>/vsrc/axi4_spec/oss_amba_axi4_definition_of_axi4_lite.sv
+<AXI4_OSS_DIR>/vsrc/axi4_spec/oss_amba_axi4_single_interface_requirements.sv
+<AXI4_OSS_DIR>/vsrc/axi4_spec/oss_amba_axi4_transaction_structure.sv
+<AXI4_OSS_DIR>/vsrc/axi4_spec/oss_amba_axi4_transaction_attributes.sv
+<AXI4_OSS_DIR>/vsrc/axi4_spec/oss_amba_axi4_atomic_accesses.sv
+<AXI4_OSS_DIR>/vsrc/amba_axi4_write_address_channel.oss.sv
+<AXI4_OSS_DIR>/vsrc/amba_axi4_write_data_channel.oss.sv
+<AXI4_OSS_DIR>/vsrc/amba_axi4_write_response_channel.oss.sv
+<AXI4_OSS_DIR>/vsrc/amba_axi4_read_address_channel.oss.sv
+<AXI4_OSS_DIR>/vsrc/amba_axi4_read_data_channel.oss.sv
+<AXI4_OSS_DIR>/vsrc/axi4_lib/amba_axi4_write_response_dependencies.oss.sv
+<AXI4_OSS_DIR>/vsrc/axi4_lib/amba_axi4_write_response_dependencies_cl1_oss.sv
+<AXI4_OSS_DIR>/vsrc/axi4_lib/amba_axi4_read_response_dependencies.oss.sv
+<AXI4_OSS_DIR>/vsrc/amba_axi4_protocol_checker_oss.sv
+<AXI4_OSS_DIR>/vsrc/amba_axi4_monitor_wrapper_oss.sv
+<AXI4_OSS_DIR>/templates/riscv_formal_axi_monitor/riscv_formal_axi_monitor_template.sv
+
+# Add the existing riscv-formal harness, DUT, and any DUT-specific bus adapter.
+# <YOUR_RISCV_FORMAL_TOP>.sv
+# <YOUR_DUT>.sv
+# <OPTIONAL_CUSTOM_BUS_TO_AXI_ADAPTER>.sv

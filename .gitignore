@@ -1,0 +1,41 @@
+# Generated conversion output
+/output/
+
+# Internal or draft documentation is kept outside the public OSS commit.
+/doc/
+
+# Local maintainer-only regeneration tools. The public CI does not depend on
+# these files, but they may be kept in a developer checkout for future refreshes.
+/scripts/
+/Makefile.convert
+
+# SymbiYosys/Yosys run directories and artifacts
+/**/work/
+/**/engine_*/
+/**/*_bmc/
+/**/*_bmc[0-9]*/
+/**/*_prove/
+/**/*_cover/
+/**/manual_*/
+/**/status
+/**/status.path
+/**/status.sqlite
+/**/logfile.txt
+/**/property_summary.txt
+/**/PASS
+/**/FAIL
+/**/*.xml
+/**/*.vcd
+/**/*.fst
+/**/*.smt2
+/**/*.yw
+/**/*.stdout
+/**/.*.generated.sby
+
+# Python/tool cache
+__pycache__/
+*.py[cod]
+
+# Editor and OS noise
+*~
+.DS_Store

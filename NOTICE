@@ -1,0 +1,13 @@
+AXI4 OSS FVIP
+
+This project is derived from YosysHQ SVA-AXI4-FVIP.
+
+Original project:
+https://github.com/YosysHQ-GmbH/SVA-AXI4-FVIP
+
+Original license:
+ISC License
+
+The original copyright notice and license text are preserved in COPYING.
+This repository contains modifications for OSS/SymbiYosys-based AXI4 protocol
+and data-integrity checking.
