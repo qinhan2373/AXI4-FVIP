@@ -1,0 +1,40 @@
+[tasks]
+bmc
+cover
+
+[options]
+bmc: mode bmc
+bmc: depth 48
+cover: mode cover
+cover: depth 64
+
+[engines]
+bmc: smtbmc --keep-going boolector
+cover: smtbmc boolector
+
+[script]
+read -formal -sv amba_axi4_protocol_checker_pkg.sv
+read -formal -sv amba_axi4_data_integrity_pkg.sv
+read -formal -sv amba_axi4_di_golden_memory_core.sv
+read -formal -sv amba_axi4_data_integrity_word_properties.sv
+read -formal -sv amba_axi4_data_integrity_window_properties.sv
+read -formal -sv amba_axi4_data_integrity_window.sv
+read -formal -sv amba_axi4_di_single_bridge_source_properties.sv
+read -formal -sv amba_axi4_di_single_bridge_data_integrity_properties.sv
+read -formal -sv amba_axi4_di_single_bridge_source.sv
+read -formal -sv amba_axi4_di_single_bridge_model.sv
+read -formal -sv data_integrity_single_bridge_smoke_tb.sv
+prep -top data_integrity_single_bridge_smoke_tb
+
+[files]
+../../../vsrc/amba_axi4_protocol_checker_pkg.sv
+../../../vsrc/data_integrity/amba_axi4_data_integrity_pkg.sv
+../../../vsrc/data_integrity/amba_axi4_di_golden_memory_core.sv
+../../../vsrc/data_integrity/amba_axi4_data_integrity_word_properties.sv
+../../../vsrc/data_integrity/amba_axi4_data_integrity_window_properties.sv
+../../../vsrc/data_integrity/amba_axi4_data_integrity_window.sv
+../../../vsrc/data_integrity/single_bridge/amba_axi4_di_single_bridge_source_properties.sv
+../../../vsrc/data_integrity/single_bridge/amba_axi4_di_single_bridge_data_integrity_properties.sv
+../../../vsrc/data_integrity/single_bridge/amba_axi4_di_single_bridge_source.sv
+../../../vsrc/data_integrity/single_bridge/amba_axi4_di_single_bridge_model.sv
+data_integrity_single_bridge_smoke_tb.sv

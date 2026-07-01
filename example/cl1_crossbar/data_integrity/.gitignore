@@ -1,0 +1,7 @@
+work/
+*.log
+*.vcd
+*.fst
+*.xml
+property_summary.txt
+.*.generated*.sby

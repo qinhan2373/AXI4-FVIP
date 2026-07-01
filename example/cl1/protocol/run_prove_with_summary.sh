@@ -2,12 +2,13 @@
 set -u
 
 script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
-root_dir=$(cd -- "${script_dir}/../.." && pwd)
+example_dir=$(cd -- "${script_dir}/.." && pwd)
+root_dir=$(cd -- "${script_dir}/../../.." && pwd)
 task=${1:-prove}
 sby_cmd=${SBY:-sby}
 python_cmd=${PYTHON:-python3}
 
-bridge_dir=${CL1_BRIDGE_DIR:-${script_dir}}
+bridge_dir=${CL1_BRIDGE_DIR:-${example_dir}}
 axi2cachebus_dir=${CL1_AXI2CACHEBUS_DIR:-${bridge_dir}}
 bridge_dir=$(cd -- "${bridge_dir}" && pwd) || exit 1
 axi2cachebus_dir=$(cd -- "${axi2cachebus_dir}" && pwd) || exit 1

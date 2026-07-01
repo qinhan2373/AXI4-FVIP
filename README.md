@@ -46,6 +46,7 @@ The top-level `Makefile` is limited to public OSS/SBY checks.
 make ci
 make prove
 make cover
+make di
 make clean
 ```
 
@@ -78,6 +79,24 @@ make cl1-crossbar-bmc \
   CL1_CROSSBAR_DIR=/path/to/crossbar \
   CL1_CROSSBAR_AXI2CACHEBUS_DIR=/path/to/axi2cachebus
 ```
+
+Data-integrity checks are exposed through the same Makefile:
+
+```sh
+make di
+DI_RUNSET=downstream-aww DI_DEPTH=64 make cl1-di-bmc
+DI_RUNSET=upstream-bp DI_DEPTH=64 make cl1-crossbar-di-bmc
+```
+
+`DI_RUNSET=signoff` is the default and runs the CL1 signoff groups available in
+each example. `DI_PROTOCOL_CONSTRAINTS=0` is the default for data-integrity
+BMC, so the protocol checker `cp_*` assumption cone is not added unless the
+caller explicitly requests it. Data-integrity runs overwrite the previous
+output for the same example, runset, and mode by default; set
+`DI_OVERWRITE_WORK=0` or `WORK_ROOT=/path/to/run` only when preserving multiple
+runs is required. Data-integrity targets use `DI_TIMEOUT=60m` by default.
+Override it with `DI_TIMEOUT=<duration>` or use `TIMEOUT=<duration>` to apply a
+timeout to any target.
 
 The `example/axi_crossbar` targets are kept as optional demos because they
 depend on the external AXI crossbar RTL listed in their `.sby` files.

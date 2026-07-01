@@ -2,12 +2,13 @@
 set -u
 
 script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
-root_dir=$(cd -- "${script_dir}/../.." && pwd)
+example_dir=$(cd -- "${script_dir}/.." && pwd)
+root_dir=$(cd -- "${script_dir}/../../.." && pwd)
 task=${1:-prove}
 sby_cmd=${SBY:-sby}
 python_cmd=${PYTHON:-python3}
 
-crossbar_dir=${CL1_CROSSBAR_DIR:-${script_dir}}
+crossbar_dir=${CL1_CROSSBAR_DIR:-${example_dir}}
 axi2cachebus_dir=${CL1_CROSSBAR_AXI2CACHEBUS_DIR:-${crossbar_dir}}
 crossbar_dir=$(cd -- "${crossbar_dir}" && pwd) || exit 1
 axi2cachebus_dir=$(cd -- "${axi2cachebus_dir}" && pwd) || exit 1
